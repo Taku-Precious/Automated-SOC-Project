@@ -1,58 +1,40 @@
-# Wazuh containers for Docker
+# Wazuh Docker Image Builder
 
-[![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://wazuh.com/community/join-us-on-slack/)
-[![Email](https://img.shields.io/badge/email-join-blue.svg)](https://groups.google.com/forum/#!forum/wazuh)
+The creation of the images for the Wazuh stack deployment in Docker is done with the `build-docker-images/build-images.sh` script
 
-## Description
+This script initializes the environment variables needed to build each of the images.
 
-The `wazuh/wazuh-docker` repository provides resources to deploy the Wazuh cybersecurity platform using Docker containers. This setup enables easy installation and orchestration of the full Wazuh stack, including the Wazuh server, dashboard (based on OpenSearch Dashboards), and OpenSearch for indexing and search.
+To execute it, make sure to be in the `build-docker-images` directory:
 
-## Capabilities
+```bash
+cd build-docker-images
+```
 
-- Full deployment of the Wazuh stack using Docker.
-- `docker compose` support for orchestration.
-- Scalable architecture with multi-node support.
-- Data persistence through configurable volumes.
-- Ready-to-use configurations for production or testing environments.
+Then execute:
 
-## Branch Convention
+```bash
+./build-images.sh
+```
 
-- `main`: Developing and testing of new features.
-- `X.Y.Z`: Version-specific branches (e.g., `4.14.7`, `4.13.0`, etc.).
+The script also allows to build images from other versions of Wazuh by using the `-v` or `--version` argument:
 
-## Documentation
+```bash
+./build-images.sh -v 4.14.7
+```
 
-Official documentation is available at:
+To get all the available script options use the -h or --help option:
 
-[https://documentation.wazuh.com/current/deployment-options/docker/index.html](https://documentation.wazuh.com/current/deployment-options/docker/index.html)
+```bash
+./build-images.sh -h
 
-You can also explore internal documentation in the [`docs`](https://github.com/wazuh/wazuh-docker/tree/main/docs) folder of this repository.
+Usage: ./build-images.sh [OPTIONS]
 
-## Get Involved
+    -d, --dev <ref>              [Optional] Set the development stage you want to build, example rc1 or beta1, not used by default.
+    -f, --filebeat-module <ref>  [Optional] Set Filebeat module version. By default 0.5.
+    -r, --revision <rev>         [Optional] Package revision. By default 1
+    -rg, --registry <reg>        [Optional] Set the Docker registry to push the images.
+    -v, --version <ver>          [Optional] Set the Wazuh version should be builded. By default, 4.14.7.
+    -m, --multiarch              [Optional] Enable multi-architecture builds.
+    -h, --help                   Show this help.
 
-- **Fork the repository** and create your own branches to add features or fix bugs.
-- **Open issues** to report bugs or request features.
-- **Submit pull requests** following the contributing guidelines.
-- Participate in [discussions](https://github.com/wazuh/wazuh-docker/discussions) if available.
-
-## Authors / Maintainers
-
-These Docker containers are based on:
-
-*  "deviantony" dockerfiles which can be found at [https://github.com/deviantony/docker-elk](https://github.com/deviantony/docker-elk)
-*  "xetus-oss" dockerfiles, which can be found at [https://github.com/xetus-oss/docker-ossec-server](https://github.com/xetus-oss/docker-ossec-server)
-
-This project is maintained by the [Wazuh](https://wazuh.com) team, with active contributions from the community.
-
-See the full list of contributors at:
-[https://github.com/wazuh/wazuh-docker/graphs/contributors](https://github.com/wazuh/wazuh-docker/graphs/contributors)
-
-We thank them and everyone else who has contributed to this project.
-
-## License and copyright
-
-Wazuh Docker Copyright (C) 2017, Wazuh Inc. (License GPLv2)
-
-## Web references
-
-[Wazuh website](http://wazuh.com)
+```
