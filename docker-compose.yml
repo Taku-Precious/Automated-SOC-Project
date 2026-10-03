@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  cassandra:
+    image: cassandra:4.1
+    container_name: thehive-cassandra
+    restart: unless-stopped
+    environment:
+      - MAX_HEAP_SIZE=512M
+      - HEAP_NEWSIZE=128M
+      - CASSANDRA_CLUSTER_NAME=thp
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+    mem_limit: 1.5g
+
+  thehive:
+    image: strangebee/thehive:5.2
+    container_name: thehive
+    restart: unless-stopped
+    depends_on:
+      - cassandra
+    ports:
+      - "9000:9000"
+    environment:
+      - JVM_OPTS=-Xms512m -Xmx1024m
+    volumes:
+      - thehive-data:/data
+      - thehive-logs:/var/log/thehive
+    mem_limit: 1.5g
+    command:
+      - --cortex-port
+      - "9001"
+
+volumes:
+  cassandra-data:
+  thehive-data:
+  thehive-logs:
